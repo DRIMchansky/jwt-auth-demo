@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "scripts": {
+    "env": "cd server && npm run env && cd ../client && npm run env",
+    "install-d": "pnpm install && cd server && pnpm install && cd ../client && pnpm install",
+    "remove-d": "rm -rf node_modules && cd server && rm -rf node_modules && cd ../client && rm -rf node_modules",
+    "dev": "concurrently --kill-others \"cd client && npm run dev\" \"cd server && npm run dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
