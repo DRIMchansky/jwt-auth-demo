@@ -1,16 +1,8 @@
-
-
 class UserService {
-
-  protected db: any
-
-  constructor(db: any) {
-
-    this.db = db
-  }
-
-  public register() {
-
+  public register(login: string, password: string) {
     //
   }
 }
+
+const userService = new UserService()
+export { userService }

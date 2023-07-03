@@ -1,9 +1,11 @@
-import dotenv from 'dotenv'
+import cookieParser from 'cookie-parser'
 import express from 'express'
+import dotenv from 'dotenv'
 import cors from 'cors'
 
-import { UserController } from './controllers/user.controller'
-import { DatabaseMongo } from './database/database.mongo'
+import { db } from './database'
+import { userRouter } from './routes/user.router'
+import { errorMiddleware } from './middlewares/error.middleware'
 
 dotenv.config()
 
@@ -12,26 +14,18 @@ const initExpress = async () => {
 
   app.use(cors())
   app.use(express.json())
+  app.use(cookieParser())
   app.use(express.urlencoded({ extended: true }))
 
-  const db = new DatabaseMongo()
   await db.connect()
 
-  const userController = new UserController()
-
-  app.post('/register', userController.register.bind(userController))
-
-  app.get('/', (req, res) => {
-    res.json({
-      test: true
-    })
-  })
+  app.use('/api', userRouter)
+  app.use(errorMiddleware)
 
   app.listen(process.env.PORT || 7060)
 }
 
 const startApp = async () => {
-
   initExpress()
 }
 

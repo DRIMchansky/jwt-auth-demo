@@ -1,15 +1,19 @@
 {
-    "compilerOptions": {
-      "outDir": "./dist/",
-      "sourceMap": false,
-      "noImplicitAny": true,
-      "moduleResolution": "node",
-      "esModuleInterop": true,
-      "types": ["node"],
-      "module": "CommonJS",
-      "target": "ESNext",
-      "allowJs": true,
-      "typeRoots": ["./node_modules/@types"]
-    },
-    "include": ["./src/**/*.ts"]
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": false,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "types": ["node"],
+    "module": "ESNext",
+    "target": "ESNext",
+    "allowJs": true,
+    "typeRoots": ["./node_modules/@types"]
+  },
+  "ts-node": {
+    // Tell ts-node CLI to install the --loader automatically, explained below
+    "esm": true
+  },
+  "include": ["./src/**/*.ts"]
 }
