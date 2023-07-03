@@ -1,6 +1,8 @@
 import mongoose from 'mongoose'
 
 class Database {
+  protected connected = false
+
   async connect(): Promise<void> {
     try {
       const host = process.env.DB_HOST
@@ -8,6 +10,7 @@ class Database {
       const name = process.env.DB_NAME
 
       await mongoose.connect(`mongodb://${host}:${port}/${name}`)
+      this.connected = true
     } catch (error) {
       console.error('DB connection error: ', error)
     }

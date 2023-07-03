@@ -1,7 +1,5 @@
+import jwt from 'jsonwebtoken'
+
 type Payload = any
 
-class TokenService {
-  generateTokens(_payload: Payload) {
-    // @todo
-  }
-}
+export const generateTokens = async (payload: Payload) => {}

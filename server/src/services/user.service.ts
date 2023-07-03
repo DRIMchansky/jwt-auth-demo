@@ -1,8 +1,1 @@
-class UserService {
-  public register(login: string, password: string) {
-    //
-  }
-}
-
-const userService = new UserService()
-export { userService }
+export const register = async (login: string, password: string) => {}

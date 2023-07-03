@@ -7,5 +7,4 @@ const userSchema = new Schema({
 })
 
 const userModel = model('user', userSchema)
-
 export { userModel }
