@@ -6,5 +6,4 @@ const userSchema = new Schema({
   name: { type: String }
 })
 
-const userModel = model('user', userSchema)
-export { userModel }
+export const userModel = model('user', userSchema)

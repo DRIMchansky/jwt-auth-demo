@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { register } from '../controllers/user.controller'
 import { body } from 'express-validator'
 
-const userRouter = Router()
+export const userRouter = Router()
 
 userRouter.post(
   '/register',
@@ -10,5 +10,3 @@ userRouter.post(
   body('password').isLength({ min: 5, max: 30 }),
   register
 )
-
-export { userRouter }

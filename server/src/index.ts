@@ -3,13 +3,13 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 
-import { db } from './database'
-import { userRouter } from './routes/user.router'
 import { errorMiddleware } from './middlewares/error.middleware'
+import { userRouter } from './routes/user.router'
+import * as db from './services/db.service'
 
 dotenv.config()
 
-const initExpress = async () => {
+const run = async () => {
   const app = express()
 
   app.use(cors())
@@ -25,8 +25,4 @@ const initExpress = async () => {
   app.listen(process.env.PORT || 7060)
 }
 
-const startApp = async () => {
-  initExpress()
-}
-
-startApp()
+run()
