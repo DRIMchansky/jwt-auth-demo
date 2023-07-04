@@ -5,4 +5,4 @@ const tokenSchema = new Schema({
   refreshToken: { type: String, required: true }
 })
 
-export const tokenModel = model('token', tokenSchema)
+export const TokenModel = model('Token', tokenSchema)
