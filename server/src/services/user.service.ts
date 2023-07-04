@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 
 import { findToken, generateTokens, removeToken, saveToken, validateRefreshToken } from './token.service'
-import { UserDataPublic, UserModel } from '../models/user.model'
+import { UserInfoPublic, UserModel } from '../models/user.model'
 import { ApiError } from '../exceptions/api.error'
 
 export const register = async (login: string, password: string) => {
@@ -12,12 +12,12 @@ export const register = async (login: string, password: string) => {
   const passwordHash = await bcrypt.hash(password, 3)
 
   const user = await UserModel.create({ login, password: passwordHash })
-  const userData = user.getPublic()
+  const userInfo = user.getPublicInfo()
 
-  const tokens = generateTokens(userData)
-  await saveToken(userData.id, tokens.refreshToken)
+  const tokens = generateTokens(userInfo)
+  await saveToken(userInfo.id, tokens.refreshToken)
 
-  return { ...tokens, user: userData }
+  return { ...tokens, user: userInfo }
 }
 
 export const login = async (login: string, password: string) => {
@@ -31,12 +31,12 @@ export const login = async (login: string, password: string) => {
     throw ApiError.BadRequest('Wrong password')
   }
 
-  const userData = user.getPublic()
+  const userInfo = user.getPublicInfo()
 
-  const tokens = generateTokens({ ...userData })
-  await saveToken(userData.id, tokens.refreshToken)
+  const tokens = generateTokens({ ...userInfo })
+  await saveToken(userInfo.id, tokens.refreshToken)
 
-  return { ...tokens, user: userData }
+  return { ...tokens, user: userInfo }
 }
 
 export const logout = async (refreshToken: string) => {
@@ -57,15 +57,15 @@ export const refresh = async (refreshToken: string) => {
 
   const user = await UserModel.findById(userDataToken.id)
 
-  const userData = user.getPublic()
-  const tokens = generateTokens({ ...userData })
+  const userInfo = user.getPublicInfo()
+  const tokens = generateTokens({ ...userInfo })
 
-  await saveToken(userData.id, tokens.refreshToken)
+  await saveToken(userInfo.id, tokens.refreshToken)
 
-  return { ...tokens, user: userData }
+  return { ...tokens, user: userInfo }
 }
 
-export const getUserData = async (refreshToken: string) => {
+export const getUserInfo = async (refreshToken: string) => {
   if (!refreshToken) {
     throw ApiError.UnauthorizedError()
   }
@@ -77,12 +77,12 @@ export const getUserData = async (refreshToken: string) => {
   }
 
   const user = await UserModel.findById(userDataToken.id)
-  const userData = user.getPublic()
+  const userInfo = user.getPublicInfo()
 
-  return userData
+  return userInfo
 }
 
-export const updateUserData = async (refreshToken: string, userDataUpdated: UserDataPublic) => {
+export const updateUserInfo = async (refreshToken: string, userDataUpdated: UserInfoPublic) => {
   if (!refreshToken) {
     throw ApiError.UnauthorizedError()
   }
@@ -94,13 +94,13 @@ export const updateUserData = async (refreshToken: string, userDataUpdated: User
   }
 
   const user = await UserModel.findById(userDataToken.id)
-  user.updateData(userDataUpdated)
+  user.updatePublicInfo(userDataUpdated)
   await user.save()
 
-  const userData = user.getPublic()
-  const tokens = generateTokens({ ...userData })
+  const userInfo = user.getPublicInfo()
+  const tokens = generateTokens({ ...userInfo })
 
-  await saveToken(userData.id, tokens.refreshToken)
+  await saveToken(userInfo.id, tokens.refreshToken)
 
-  return { ...tokens, user: userData }
+  return { ...tokens, user: userInfo }
 }

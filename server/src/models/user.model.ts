@@ -1,10 +1,13 @@
 import { model, Schema, Model } from 'mongoose'
 
-export type UserDataPublic = {
-  id: string
-  login: string
+export type UserInfoPublicUpdatable = {
   firstName: string
   lastName: string
+}
+
+export type UserInfoPublic = UserInfoPublicUpdatable & {
+  id: string
+  login: string
 }
 
 export interface IUser {
@@ -15,8 +18,8 @@ export interface IUser {
 }
 
 export interface IUserDocument extends IUser, Document {
-  getPublic: () => UserDataPublic
-  updateData: (dataUpdated: UserDataPublic) => void
+  getPublicInfo: () => UserInfoPublic
+  updatePublicInfo: (dataUpdated: UserInfoPublicUpdatable) => void
 }
 
 export interface IUserModel extends Model<IUserDocument> {}
@@ -28,7 +31,7 @@ const userSchema = new Schema<IUserDocument>({
   lastName: { type: String }
 })
 
-userSchema.methods.getPublic = function () {
+userSchema.methods.getPublicInfo = function () {
   return {
     id: this._id,
     login: this.login,
@@ -37,10 +40,9 @@ userSchema.methods.getPublic = function () {
   }
 }
 
-userSchema.methods.updateData = function (dataUpdated: UserDataPublic) {
+userSchema.methods.updatePublicInfo = function (dataUpdated: UserInfoPublicUpdatable) {
   dataUpdated.firstName && (this.firstName = dataUpdated.firstName)
   dataUpdated.lastName && (this.lastName = dataUpdated.lastName)
-  dataUpdated.login && (this.login = dataUpdated.login)
 }
 
 export const UserModel = model<IUserDocument, IUserModel>('User', userSchema)
