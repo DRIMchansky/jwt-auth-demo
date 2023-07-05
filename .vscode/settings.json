@@ -8,12 +8,6 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "eslint.workingDirectories": [
-    "./client", 
-    "./server"
-],
-  "eslint.validate": [
-    "typescript",
-    "typescriptreact"
-  ]
+  "eslint.workingDirectories": ["./client", "./server"],
+  "eslint.validate": ["typescript", "typescriptreact"]
 }
