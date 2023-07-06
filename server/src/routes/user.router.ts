@@ -17,8 +17,6 @@ userRouter.post('/logout', logout)
 
 userRouter.get('/refresh', refresh)
 
-userRouter.get('/refresh', refresh)
-
 userRouter.get('/userinfo', getUserInfo)
 
 userRouter.put('/userinfo', updateUserInfo)

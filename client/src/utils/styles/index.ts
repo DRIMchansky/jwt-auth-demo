@@ -8,4 +8,8 @@ export const GlobalStyles = createGlobalStyle`
   ${fonts}
   ${colors}
   ${normalize}
+
+  body {
+    font-family: var(--font-family-primary);
+  }
 `

@@ -17,6 +17,6 @@ export default css`
     --color-button-active: var(--color-dark-400);
     --color-button-disabled: var(--color-gray-900);
 
-    --color-header-bg: var(--color-blue-500);
+    --color-header-bg: var(--color-blue-300);
   }
 `
