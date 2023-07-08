@@ -1,3 +1,3 @@
-import { HeaderStyled } from './styles'
+import { HeadlineStyled } from './styles'
 
-export { HeaderStyled as Headline }
+export { HeadlineStyled as Headline }

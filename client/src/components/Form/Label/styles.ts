@@ -6,4 +6,5 @@ export const LabelStyled = styled.label`
   line-height: var(--line-height-l);
   font-weight: 500;
   color: var(--color-form-text);
+  position: relative;
 `
