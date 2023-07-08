@@ -4,11 +4,14 @@ import { useState } from 'react'
 
 import { CustomError, InputOnChangeEvent } from '../../utils/types'
 import { useLoginMutation } from '../../slices/user.api.slice'
-import { setCredentials } from '../../slices/auth.slice'
-import { useAppDispatch } from '../../hooks'
 import { InlineLink } from '../../components/InlineLink'
-
-import { ButtonFormStyled, FormStyled, HeaderStyled, InputStyled, LabelStyled, LoginStyled } from './styles'
+import { setCredentials } from '../../slices/auth.slice'
+import { Button } from '../../components/Form/Button'
+import { Headline } from '../../components/Headline'
+import { Label } from '../../components/Form/Label'
+import { Input } from '../../components/Form/Input'
+import { Form } from '../../components/Form'
+import { useAppDispatch } from '../../hooks'
 
 export const LoginPage = () => {
   const [userLogin, setUserLogin] = useState('')
@@ -34,36 +37,35 @@ export const LoginPage = () => {
   }
 
   return (
-    <LoginStyled>
-      <HeaderStyled>Login page</HeaderStyled>
-
-      <FormStyled onSubmit={submitHandler} aria-busy="false">
-        <LabelStyled>
+    <>
+      <Headline>Login page</Headline>
+      <Form onSubmit={submitHandler} aria-busy="false">
+        <Label>
           Login
-          <InputStyled
+          <Input
             type="text"
             value={userLogin}
             onChange={(e: InputOnChangeEvent) => setUserLogin(e.target.value)}
             autoComplete="username"
           />
-        </LabelStyled>
+        </Label>
 
-        <LabelStyled>
+        <Label>
           Password
-          <InputStyled
+          <Input
             type="password"
             value={userPassword}
             onChange={(e: InputOnChangeEvent) => setUserPassword(e.target.value)}
             autoComplete="current-password"
           />
-        </LabelStyled>
+        </Label>
 
-        <ButtonFormStyled type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading}>
           Log In
-        </ButtonFormStyled>
+        </Button>
 
         <div>Not registered? {<InlineLink to="/register">Register</InlineLink>}</div>
-      </FormStyled>
-    </LoginStyled>
+      </Form>
+    </>
   )
 }
