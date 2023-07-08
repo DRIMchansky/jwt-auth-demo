@@ -9,6 +9,11 @@ export const GlobalStyles = createGlobalStyle`
   ${colors}
   ${normalize}
 
+  :root {
+    --opacity-hover: 0.8;
+    --duration-transition: 0.1s;
+  }
+
   body {
     font-family: var(--font-family-primary);
   }

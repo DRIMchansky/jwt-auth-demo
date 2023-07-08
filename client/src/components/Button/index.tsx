@@ -1,14 +1,16 @@
+import { ButtonHTMLAttributes } from 'react'
+
 import { ButtonStyled } from './styles'
 
 type Props = {
-  onClick: () => void
+  onClick?: () => void
   children?: React.ReactNode
-}
+} & ButtonHTMLAttributes<HTMLButtonElement>
 
-export const Button: React.FC<Props> = props => {
+export const Button: React.FC<Props> = ({ children, onClick, ...props }) => {
   return (
-    <ButtonStyled type="button" onClick={props.onClick}>
-      {props.children}
+    <ButtonStyled onClick={onClick} {...props}>
+      {children}
     </ButtonStyled>
   )
 }
