@@ -43,11 +43,11 @@ export const LoginPage = () => {
     }
   }
 
-  const validateLogin = (): boolean => {
-    if (userLogin.length < LOGIN_MIN_LENGTH) {
+  const validateLogin = (login: string): boolean => {
+    if (login.length < LOGIN_MIN_LENGTH) {
       setLoginValidateError('Login is too short')
       return false
-    } else if (userLogin.length > LOGIN_MAX_LENGTH) {
+    } else if (login.length > LOGIN_MAX_LENGTH) {
       setLoginValidateError('Login is too long')
       return false
     } else {
@@ -57,11 +57,11 @@ export const LoginPage = () => {
     return true
   }
 
-  const validatePassword = (): boolean => {
-    if (userPassword.length < PASSWORD_MIN_LENGTH) {
+  const validatePassword = (password: string): boolean => {
+    if (password.length < PASSWORD_MIN_LENGTH) {
       setPasswordValidateError('Password is too short')
       return false
-    } else if (userPassword.length > PASSWORD_MAX_LENGTH) {
+    } else if (password.length > PASSWORD_MAX_LENGTH) {
       setPasswordValidateError('Password is too long')
       return false
     } else {
@@ -72,7 +72,7 @@ export const LoginPage = () => {
   }
 
   const validateForm = (): boolean => {
-    const result = validateLogin() && validatePassword()
+    const result = validateLogin(userLogin) && validatePassword(userPassword)
     if (!result) {
       toast.error('Please, check your login form data')
     }
@@ -89,8 +89,9 @@ export const LoginPage = () => {
             type="text"
             value={userLogin}
             onChange={(e: InputOnChangeEvent) => {
-              setUserLogin(e.target.value)
-              validateLogin()
+              const login = e.target.value
+              setUserLogin(login)
+              validateLogin(login)
             }}
             autoComplete="username"
           />
@@ -103,8 +104,9 @@ export const LoginPage = () => {
             type="password"
             value={userPassword}
             onChange={(e: InputOnChangeEvent) => {
-              setUserPassword(e.target.value)
-              validatePassword()
+              const password = e.target.value
+              setUserPassword(password)
+              validatePassword(password)
             }}
             autoComplete="current-password"
           />
