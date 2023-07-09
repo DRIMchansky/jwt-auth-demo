@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useState } from 'react'
 
-import { LOGIN_MAX_LENGTH, LOGIN_MIN_LENGTH, PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from '../../utils/constants'
+import { validateLogin, validatePassword } from '../../utils/validate'
 import { CustomError, InputOnChangeEvent } from '../../utils/types'
 import { ErrorMessage } from '../../components/Form/ErrorMessage'
 import { useLoginMutation } from '../../slices/user.api.slice'
@@ -43,32 +43,18 @@ export const LoginPage = () => {
     }
   }
 
-  const validateLogin = (login: string): boolean => {
-    if (login.length < LOGIN_MIN_LENGTH) {
-      setLoginValidateError('Login is too short')
-      return false
-    } else if (login.length > LOGIN_MAX_LENGTH) {
-      setLoginValidateError('Login is too long')
-      return false
-    } else {
-      setLoginValidateError(null)
-    }
-
-    return true
+  const onLoginInputChange = (e: InputOnChangeEvent) => {
+    const login = e.target.value
+    const validationResult = validateLogin(login)
+    setUserLogin(login)
+    setLoginValidateError(validationResult === true ? null : validationResult)
   }
 
-  const validatePassword = (password: string): boolean => {
-    if (password.length < PASSWORD_MIN_LENGTH) {
-      setPasswordValidateError('Password is too short')
-      return false
-    } else if (password.length > PASSWORD_MAX_LENGTH) {
-      setPasswordValidateError('Password is too long')
-      return false
-    } else {
-      setPasswordValidateError(null)
-    }
-
-    return true
+  const onPasswordInputChange = (e: InputOnChangeEvent) => {
+    const password = e.target.value
+    const validationResult = validatePassword(password)
+    setUserPassword(password)
+    setPasswordValidateError(validationResult === true ? null : validationResult)
   }
 
   const validateForm = (): boolean => {
@@ -76,7 +62,7 @@ export const LoginPage = () => {
     if (!result) {
       toast.error('Please, check your login form data')
     }
-    return result
+    return result === true
   }
 
   return (
@@ -85,16 +71,7 @@ export const LoginPage = () => {
       <Form onSubmit={submitHandler} aria-busy="false">
         <Label>
           Login
-          <Input
-            type="text"
-            value={userLogin}
-            onChange={(e: InputOnChangeEvent) => {
-              const login = e.target.value
-              setUserLogin(login)
-              validateLogin(login)
-            }}
-            autoComplete="username"
-          />
+          <Input type="text" value={userLogin} onChange={onLoginInputChange} autoComplete="username" />
           {loginValidateError && <ErrorMessage>{loginValidateError}</ErrorMessage>}
         </Label>
 
@@ -103,11 +80,7 @@ export const LoginPage = () => {
           <Input
             type="password"
             value={userPassword}
-            onChange={(e: InputOnChangeEvent) => {
-              const password = e.target.value
-              setUserPassword(password)
-              validatePassword(password)
-            }}
+            onChange={onPasswordInputChange}
             autoComplete="current-password"
           />
           {passwordValidateError && <ErrorMessage>{passwordValidateError}</ErrorMessage>}
