@@ -16,7 +16,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
     const userData = await userService.register(login, password)
     res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
 
-    return res.json(userData)
+    return res.json(userData.user)
   } catch (e) {
     next(e)
   }
@@ -29,7 +29,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     const userData = await userService.login(login, password)
     res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
 
-    return res.json(userData)
+    return res.json(userData.user)
   } catch (e) {
     next(e)
   }
