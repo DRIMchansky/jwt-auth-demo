@@ -1,6 +1,7 @@
 import { useAppSelector } from '../../hooks'
+import { LogoutButton } from './LogoutButton'
 
-import { ButtonStyled, HeaderStyled, LinkStyled, LogoStyled } from './styles'
+import { HeaderStyled, LinkStyled, LogoStyled } from './styles'
 
 export const Header: React.FC = () => {
   const { userInfo } = useAppSelector(state => state.auth)
@@ -13,7 +14,7 @@ export const Header: React.FC = () => {
         {userInfo ? (
           <>
             <LinkStyled to="/profile">Profile</LinkStyled>
-            <ButtonStyled>Log Out</ButtonStyled>
+            <LogoutButton>Log Out</LogoutButton>
           </>
         ) : (
           <>

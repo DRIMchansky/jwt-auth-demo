@@ -1,5 +1,11 @@
+import { Headline } from '../../components/Headline'
+
 import { HomeStyled } from './styles'
 
 export const HomePage = () => {
-  return <HomeStyled>Home page</HomeStyled>
+  return (
+    <HomeStyled>
+      <Headline>Home page</Headline>
+    </HomeStyled>
+  )
 }

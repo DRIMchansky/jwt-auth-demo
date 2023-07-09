@@ -25,7 +25,7 @@ export const LoginPage = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const [login, { isLoading }] = useLoginMutation()
+  const [loginApiCall, { isLoading }] = useLoginMutation()
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -33,7 +33,7 @@ export const LoginPage = () => {
     if (!validateForm()) return
 
     try {
-      const res = await login({ login: userLogin, password: userPassword }).unwrap()
+      const res = await loginApiCall({ login: userLogin, password: userPassword }).unwrap()
 
       dispatch(setCredentials({ ...res }))
       navigate('/')
